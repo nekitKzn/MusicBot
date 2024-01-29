@@ -1,44 +1,42 @@
 version: '3.8'
 
 services:
-  marketingbot-prod:
-    image: music-bot
+  musicbot-prod:
+    image: nekitvp/musicbot:1.0.0
     restart: on-failure
     depends_on:
-      - marketingbot-db
+      - musicbot-db
     expose:
       - "8080"
     networks:
-      - marketingbot-prod
+      - musicbot-prod
     environment:
-      DB_HOST: marketingbot-db
+      DB_HOST: musicbot-db
       DB_PORT: 5432
-      DB_NAME: marketingbot
+      DB_NAME: musicBot
       DB_USERNAME: postgres
       DB_PASSWORD: tblJYutvdNe6T16UwEbZHCJ01NFaFKhy
       SPRING_PROFILES_ACTIVE: prod
-      VIRTUAL_HOST: $HOSTNAME
-      VIRTUAL_PORT: 8000
 
-  marketingbot-db:
-    container_name: marketingbot-db
+  musicbot-db:
+    container_name: musicbot-db
     image: postgres:12-alpine
     restart: on-failure
     volumes:
-      - pgdata-marketingbot:/var/lib/postgresql/data
+      - /pgdata-musicbot/var/lib/postgresql/data
     expose:
       - "5432"
     ports:
       - "9736:5432"
     networks:
-      - marketingbot-prod
+      - musicbot-prod
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: tblJYutvdNe6T16UwEbZHCJ01NFaFKhy
-      POSTGRES_DB: marketingbot
+      POSTGRES_DB: musicBot
 
 networks:
-  marketingbot-prod:
+  musicbot-prod:
 
 volumes:
-  pgdata-marketingbot:
+  pgdata-musicbot:
