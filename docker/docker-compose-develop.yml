@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  marketingbot-dev:
+    image: music-bot
+    restart: on-failure
+    depends_on:
+      - marketingbot-db
+    expose:
+      - "8080"
+    ports:
+      - "5006:8080"
+    networks:
+      - marketingbot-dev
+    environment:
+      DB_HOST: marketingbot-db
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: ks51zcVavcChfepPaeORY5aGff9904fU
+      SPRING_PROFILES_ACTIVE: develop
+      DB_NAME: marketingbot
+      VIRTUAL_HOST: $HOSTNAME
+      VIRTUAL_PORT: 8080
+
+  marketingbot-db:
+    container_name: marketingbot-db
+    image: postgres:12-alpine
+    restart: on-failure
+    volumes:
+      - pgdata-marketingbot-dev:/var/lib/postgresql/data
+    expose:
+      - "5432"
+    ports:
+      - "2345:5432"
+    networks:
+      - marketingbot-dev
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ks51zcVavcChfepPaeORY5aGff9904fU
+      POSTGRES_DB: marketingbot
+
+networks:
+  marketingbot-dev:
+
+volumes:
+  pgdata-marketingbot-dev:

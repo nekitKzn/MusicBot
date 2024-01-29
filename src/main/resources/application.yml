@@ -1,0 +1,16 @@
+bot: # t.me/prizvan_sluzhit_develop_bot
+  name: Призван служить DEVELOP
+  token: 6918318319:AAGXiCWNU0t79EW5KqCTcj4mptYh7Z8bE9I
+  groupChatId: -1002093961472
+spring:
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:musicBotbd}
+    username: ${DB_USERNAME:nikitaUser}
+    password: ${DB_PASSWORD:pgpwd4music}
+  liquibase:
+    change-log: classpath:db/db.changelog-master.yml
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+    open-in-view: false
