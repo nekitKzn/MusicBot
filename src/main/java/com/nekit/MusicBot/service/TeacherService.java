@@ -70,7 +70,7 @@ public class TeacherService {
     @Transactional
     public void updatePhoto(Message message) {
         var entity = repository.findByUserTelegramId(message.getChatId()).orElseThrow();
-        PhotoSize photo = message.getPhoto().get(3);
+        PhotoSize photo = message.getPhoto().get(message.getPhoto().size() - 1);
         entity.setPhoto(photo.getFileId());
         repository.save(entity);
     }

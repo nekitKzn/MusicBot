@@ -31,7 +31,7 @@ public class QuestionEntity extends AbstractEntity {
     private String answer;
 
     @Builder.Default
-    private boolean selected = false;
+    private Long selectNumber = 0L;
 
     @ManyToOne
     @JoinColumn(name = "teacher_id")

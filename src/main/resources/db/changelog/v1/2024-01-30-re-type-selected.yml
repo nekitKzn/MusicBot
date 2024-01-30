@@ -1,0 +1,15 @@
+databaseChangeLog:
+  - changeSet:
+      id: 02_retype_select
+      author: lobanov_nikita
+      changes:
+        - dropColumn:
+            tableName: questions
+            columnName: selected
+        - addColumn:
+            tableName: questions
+            columns:
+              - column:
+                  name: select_number
+                  type: numeric
+                  defaultValue: 0

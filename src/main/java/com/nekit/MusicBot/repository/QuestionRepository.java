@@ -16,5 +16,5 @@ public interface QuestionRepository extends JpaRepository<QuestionEntity, Long> 
 
     List<QuestionEntity> findAllByTeacherAndAnswerIsNull(TeacherEntity teacher);
 
-    Optional<QuestionEntity> findFirstByTeacherAndSelectedIsTrueOrderByCreatedAtDesc(TeacherEntity teacher);
+    Optional<QuestionEntity> findFirstByTeacherOrderByUpdatedAtDesc(TeacherEntity teacher);
 }

@@ -8,11 +8,14 @@ public class SendTelegramMessageEvent extends ApplicationEvent {
 
     private final Long chatId;
 
+    private final Integer replyMessageId;
 
-    public SendTelegramMessageEvent(Object source, String text, Long chatId) {
+
+    public SendTelegramMessageEvent(Object source, String text, Long chatId, Integer replyMessageId) {
         super(source);
         this.text = text;
         this.chatId = chatId;
+        this.replyMessageId = replyMessageId;
     }
 
     public String getText() {
@@ -21,5 +24,9 @@ public class SendTelegramMessageEvent extends ApplicationEvent {
 
     public Long getChatId() {
         return chatId;
+    }
+
+    public Integer getReplyMessageId() {
+        return replyMessageId;
     }
 }

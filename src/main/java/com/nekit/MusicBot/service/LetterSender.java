@@ -21,11 +21,14 @@ public class LetterSender {
     @Value("${bot.groupChatId}")
     private Long groupChatId;
 
+    @Value("${bot.replyMessageId}")
+    private Integer replyMessageId;
+
     private final static String NEW_TEACHER_MESSAGE = """
             Приветствуем Вас, %s, Вас сделали преподавателем в боте 'Призван служить' 🎶.\s
             Теперь у вас доступна админка преподавателя через команду /teacher\s
                         
-            Через нее вы сможете отвечать на анонимные сообщения от курсантов 😉, а также добавить добавить информацию о себе\s
+            Через нее вы сможете отвечать на анонимные сообщения от курсантов 😉, а также добавить информацию о себе\s
             Благословений! С Богом! 🙏""";
 
     private final static String NEW_ADMIN_MESSAGE = """
@@ -62,28 +65,28 @@ public class LetterSender {
             """;
 
     public void letterNewAdmin(UserEntity user) {
-        publish(user.getTelegramId(), NEW_ADMIN_MESSAGE, user.getTelegramFirstName());
+        publish(user.getTelegramId(), null, NEW_ADMIN_MESSAGE, user.getTelegramFirstName());
     }
 
     public void letterNewTeacher(UserEntity user) {
-        publish(user.getTelegramId(), NEW_TEACHER_MESSAGE, user.getTelegramFirstName());
+        publish(user.getTelegramId(), null, NEW_TEACHER_MESSAGE, user.getTelegramFirstName());
     }
 
     public void letterNewQuestionAll(QuestionEntity question) {
-        publish(groupChatId, NEW_QUESTION_ALL, question.getText());
+        publish(groupChatId, replyMessageId, NEW_QUESTION_ALL, question.getText());
     }
 
     public void letterNewQuestionPersonally(QuestionEntity question) {
-        publish(question.getTeacher().getUser().getTelegramId(), NEW_QUESTION_PERSONALLY, question.getText());
+        publish(question.getTeacher().getUser().getTelegramId(), null, NEW_QUESTION_PERSONALLY, question.getText());
     }
 
     public void letterNewAnswer(QuestionEntity entity) {
-        publish(entity.getAuthor().getTelegramId(), ANSWER, entity.getTeacher().getName(), entity.getText(), entity.getAnswer());
+        publish(entity.getAuthor().getTelegramId(), null, ANSWER, entity.getTeacher().getName(), entity.getText(), entity.getAnswer());
     }
 
-    private void publish(Long to, String template, Object... args) {
+    private void publish(Long to, Integer replyMessageId, String template, Object... args) {
         String text = isEmpty(args) ? template : String.format(template, args);
         log.info("Письмо отправлено: " + text.replaceAll("\n", " "));
-        publisher.publishEvent(new SendTelegramMessageEvent(this, text, to));
+        publisher.publishEvent(new SendTelegramMessageEvent(this, text, to, replyMessageId));
     }
 }

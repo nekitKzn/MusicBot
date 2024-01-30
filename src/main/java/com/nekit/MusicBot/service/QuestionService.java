@@ -57,12 +57,12 @@ public class QuestionService {
     }
 
     public void selectQuestion(QuestionEntity question) {
-        question.setSelected(true);
+        question.setSelectNumber(question.getSelectNumber() + 1);
         repository.save(question);
     }
 
     public void saveAnswerSelectedQuestion(TeacherEntity teacher, String answer) {
-        QuestionEntity entity = repository.findFirstByTeacherAndSelectedIsTrueOrderByCreatedAtDesc(teacher).orElseThrow();
+        QuestionEntity entity = repository.findFirstByTeacherOrderByUpdatedAtDesc(teacher).orElseThrow();
         entity.setAnswer(answer);
         repository.save(entity);
         letterSender.letterNewAnswer(entity);

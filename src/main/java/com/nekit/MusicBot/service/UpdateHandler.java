@@ -76,6 +76,7 @@ public class UpdateHandler {
             }
 
         } else if (isPhoto(update)) { // отправлена фотка
+            log.info("Пришло фото");
             Long telegramUserId = update.getMessage().getFrom().getId();
             StateBot stateBot = userService.findByTelegramId(telegramUserId).getState();
             StateBot newState = stateToHandlerMap.get(stateBot).getNextState();
