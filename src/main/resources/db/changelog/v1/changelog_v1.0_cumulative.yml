@@ -3,3 +3,5 @@ databaseChangeLog:
       file: /db/changelog/v1/2024-01-24_init_db.yml
   - include:
       file: /db/changelog/v1/2024-01-30-re-type-selected.yml
+  - include:
+      file: /db/changelog/v1/2024-01-30-add-index-and-count-state.yml

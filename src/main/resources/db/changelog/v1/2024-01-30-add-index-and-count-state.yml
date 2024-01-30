@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      id: 03_add_index
+      author: lobanov_nikita
+      changes:
+        - createIndex:
+            tableName: questions
+            columns:
+              - column:
+                  name: teacher_id
+            indexName: questions_teacher_id_idx
+        - createIndex:
+            tableName: teachers
+            indexName: teachers_user_telegram_id_idx
+            columns:
+              - column:
+                  name: user_telegram_id
+  - changeSet:
+      id: 04_add_count
+      author: lobanov_nikita
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: count_change_state
+                  type: numeric
+                  defaultValue: 0

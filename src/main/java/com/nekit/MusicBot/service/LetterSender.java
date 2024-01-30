@@ -64,6 +64,8 @@ public class LetterSender {
             «%s»
             """;
 
+    private final static String LOG_TEMPLATE_ANSWER = "{} отвечает {}: ({}) {}";
+
     public void letterNewAdmin(UserEntity user) {
         publish(user.getTelegramId(), null, NEW_ADMIN_MESSAGE, user.getTelegramFirstName());
     }
@@ -73,20 +75,22 @@ public class LetterSender {
     }
 
     public void letterNewQuestionAll(QuestionEntity question) {
+        log.info(question.getAuthor().getTelegramFirstName() + " задает вопрос всем: " + question.getText());
         publish(groupChatId, replyMessageId, NEW_QUESTION_ALL, question.getText());
     }
 
     public void letterNewQuestionPersonally(QuestionEntity question) {
+        log.info(question.getAuthor().getTelegramFirstName() + " задает вопрос " + question.getTeacher().getName() + ": " + question.getText());
         publish(question.getTeacher().getUser().getTelegramId(), null, NEW_QUESTION_PERSONALLY, question.getText());
     }
 
     public void letterNewAnswer(QuestionEntity entity) {
+        log.info(LOG_TEMPLATE_ANSWER, entity.getTeacher().getName(), entity.getAuthor().getTelegramFirstName(), entity.getText(), entity.getAnswer());
         publish(entity.getAuthor().getTelegramId(), null, ANSWER, entity.getTeacher().getName(), entity.getText(), entity.getAnswer());
     }
 
     private void publish(Long to, Integer replyMessageId, String template, Object... args) {
         String text = isEmpty(args) ? template : String.format(template, args);
-        log.info("Письмо отправлено: " + text.replaceAll("\n", " "));
         publisher.publishEvent(new SendTelegramMessageEvent(this, text, to, replyMessageId));
     }
 }

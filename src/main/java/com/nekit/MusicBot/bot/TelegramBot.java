@@ -47,6 +47,10 @@ public class TelegramBot extends TelegramLongPollingBot {
 
         Object message = updateHandler.handleMessage(update);
 
+        if (Objects.isNull(message)) {
+            return;
+        }
+
         try {
             if (message instanceof SendMessage sendMessage) {
                 execute(sendMessage);

@@ -68,8 +68,8 @@ public enum StateBot {
     /**
      * TEACHER STATE
      */
-    TEACHER_MAIN("\uD83E\uDE84\uD83E\uDE84\uD83E\uDE84Панель преподавателя!" +
-            "\uD83E\uDE84\uD83E\uDE84\uD83E\uDE84", "⬅️"),
+    TEACHER_MAIN("\uD83E\uDE84Панель преподавателя!" +
+            "\uD83E\uDE84", "⬅️"),
     QUESTION_LIST("""
              Это анонимные вопросы, адресованные Вам, на них курсанты хотят получить ответ!
              
@@ -95,7 +95,7 @@ public enum StateBot {
     TEACHER_EDIT_PHOTO_SUCCESSFULLY("Фотография профиля загружена", null),
     TEACHER_EDIT_FIO("Напишите ФИО:", "Изменить ФИО"),
     TEACHER_EDIT_FIO_SUCCESSFULLY("Информация ФИО обновлена успешно", null),
-    TEACHER_EDIT_CONTACTS("Напишите контакты:", "Изменть контакты"),
+    TEACHER_EDIT_CONTACTS("Напишите контакты:", "Изменить контакты"),
     TEACHER_EDIT_CONTACTS_SUCCESSFULLY("Информация о контактах обновлена успешно", null),
     TEACHER_EDIT_CHOCOLATE("Напишите свою любимую вкусняшку:", "Изменить вкусняшку"),
     TEACHER_EDIT_CHOCOLATE_SUCCESSFULLY("Информация о вкусняшке обновлена успешно", null),
@@ -110,7 +110,11 @@ public enum StateBot {
             "\uD83E\uDE84\uD83E\uDE84\uD83E\uDE84", "⬅️"),
 
 
-    LIST_USERS("Список пользователей", "Пользователи"),
+    ADMIN_LIST_USERS("""
+            Список пользователей:
+                    
+            %s
+            """, "Пользователи"),
 
     ADMIN_TEACHER_LIST("Список преподавателей: ", "Преподаватели"),
 

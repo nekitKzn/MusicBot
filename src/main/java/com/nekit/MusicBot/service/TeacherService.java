@@ -18,6 +18,7 @@ public class TeacherService {
 
     private final TeacherRepository repository;
 
+    @Transactional
     public TeacherEntity findById(Long id) {
         return repository.findById(id).orElse(null);
     }
@@ -30,10 +31,12 @@ public class TeacherService {
         repository.save(teacher);
     }
 
+    @Transactional
     public TeacherEntity findByTelegramId(Long telegramId) {
         return repository.findByUserTelegramId(telegramId).orElse(null);
     }
 
+    @Transactional
     public Map<Long, String> getTeacherMap() {
         return repository.findAll().stream()
                 .collect(Collectors.toMap(TeacherEntity::getId, TeacherEntity::getName));

@@ -28,7 +28,7 @@ public class AdminMainHandler implements Handler {
         var keyboard = InlineKeyboardMarkup.builder()
                 .keyboard(
                         List.of(
-                                List.of(createButtonByState(LIST_USERS),
+                                List.of(createButtonByState(ADMIN_LIST_USERS),
                                         createButtonByState(ADMIN_TEACHER_LIST)),
                                 List.of(createButtonByState(CREATE_NEW_ADMIN)),
                                 List.of(createButtonByState(CREATE_NEW_TEACHER)),

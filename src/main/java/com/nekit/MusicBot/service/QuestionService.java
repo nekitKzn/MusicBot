@@ -6,6 +6,7 @@ import com.nekit.MusicBot.model.UserEntity;
 import com.nekit.MusicBot.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class QuestionService {
     private final QuestionRepository repository;
     private final LetterSender letterSender;
 
+    @Transactional
     public void saveNewQuestionAll(UserEntity author, Message message) {
         QuestionEntity question = QuestionEntity.builder()
                 .author(author)
@@ -30,6 +32,7 @@ public class QuestionService {
         letterSender.letterNewQuestionAll(question);
     }
 
+    @Transactional
     public void saveNewQuestionPersonallyWithoutText(UserEntity author, TeacherEntity teacher) {
         QuestionEntity question = QuestionEntity.builder()
                 .author(author)
@@ -38,6 +41,7 @@ public class QuestionService {
         repository.save(question);
     }
 
+    @Transactional
     public void addTextInLastQuestion(UserEntity user, String text) {
         QuestionEntity entity = repository.findFirstByAuthorOrderByCreatedAtDesc(user).orElseThrow();
         entity.setText(text);
@@ -45,6 +49,7 @@ public class QuestionService {
         letterSender.letterNewQuestionPersonally(entity);
     }
 
+    @Transactional
     public Map<Long, String> getQuestionMap(TeacherEntity teacher) {
         List<QuestionEntity> list = repository.findAllByTeacherAndAnswerIsNull(teacher);
         return list.stream()
@@ -52,15 +57,18 @@ public class QuestionService {
                 .collect(Collectors.toMap(QuestionEntity::getId, QuestionEntity::getText));
     }
 
+    @Transactional
     public QuestionEntity findById(Long id) {
         return repository.findById(id).orElse(null);
     }
 
+    @Transactional
     public void selectQuestion(QuestionEntity question) {
         question.setSelectNumber(question.getSelectNumber() + 1);
         repository.save(question);
     }
 
+    @Transactional
     public void saveAnswerSelectedQuestion(TeacherEntity teacher, String answer) {
         QuestionEntity entity = repository.findFirstByTeacherOrderByUpdatedAtDesc(teacher).orElseThrow();
         entity.setAnswer(answer);

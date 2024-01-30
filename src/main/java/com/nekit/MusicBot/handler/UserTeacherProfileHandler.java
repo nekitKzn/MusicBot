@@ -5,6 +5,7 @@ import com.nekit.MusicBot.service.TeacherService;
 import com.nekit.MusicBot.state.StateBot;
 import com.nekit.MusicBot.util.TelegramUtil;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
@@ -33,9 +34,11 @@ public class UserTeacherProfileHandler implements Handler {
 
     @Override
     public Object handle(Message message) {
+        if (!NumberUtils.isCreatable(message.getText())) {
+            return null;
+        }
         TeacherEntity entity = teacherService.findById(Long.valueOf(message.getText()));
         String profile = TelegramUtil.getStringProfileByTeacherEntity(entity);
-
 
         var keyboard = InlineKeyboardMarkup.builder()
                 .keyboard(List.of(

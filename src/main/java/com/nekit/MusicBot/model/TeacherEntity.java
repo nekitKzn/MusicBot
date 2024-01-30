@@ -26,7 +26,7 @@ public class TeacherEntity extends AbstractEntity {
     @GenericGenerator(name = "increment", strategy = "increment")
     private Long id;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_telegram_id")
     private UserEntity user;
 

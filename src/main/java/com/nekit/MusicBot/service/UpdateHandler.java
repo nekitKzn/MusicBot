@@ -37,10 +37,6 @@ public class UpdateHandler {
         if (isMessageWithText(update)) { // пришел текст
 
             Message message = update.getMessage();
-            Long telegramUserId = update.getMessage().getFrom().getId();
-            String userName = message.getFrom().getUserName();
-            String firstName = message.getFrom().getFirstName();
-
             if (adminCommand(message)) {
                 userService.updateUserState(message.getFrom().getId(), StateBot.ADMIN_MAIN);
             }
@@ -48,8 +44,8 @@ public class UpdateHandler {
                 userService.updateUserState(message.getFrom().getId(), StateBot.TEACHER_MAIN);
             }
 
-            StateBot state = userService.getUserState(telegramUserId, message);
-            log.info("User @{} : {} sent '{}'. State is {}", userName, firstName, message.getText(), state.name());
+            StateBot state = userService.getUserState(update.getMessage().getFrom().getId(), message);
+            logSendText(message, state);
             return stateToHandlerMap.get(state).handle(message);
 
         } else if (update.hasCallbackQuery()) { //нажата кнопка
@@ -57,17 +53,14 @@ public class UpdateHandler {
             Long telegramUserId = update.getCallbackQuery().getFrom().getId();
             StateBot state = StateBot.getStateBotByCallBackQuery(update.getCallbackQuery().getData());
 
-            if (Objects.nonNull(state)) { // значит нажата кнопка
-                log.info("User @{}:{} pressed button '{}'", update.getCallbackQuery().getFrom().getUserName(),
-                        update.getCallbackQuery().getFrom().getFirstName(),
-                        state.getButtonInThisState());
+            if (Objects.nonNull(state)) { // значит нажата кнопка с состоянием
+                logPressedButton(update, state);
                 userService.updateUserState(telegramUserId, state);
                 return stateToHandlerMap.get(state).handle((Message) update.getCallbackQuery().getMessage());
 
-            } else { // значит выбран как либо варитант
+            } else { // значит выбран как либо вариант
                 StateBot stateBot = userService.findByTelegramId(telegramUserId).getState();
-                log.info("User @{}:{} select button with id: {}", update.getCallbackQuery().getFrom().getUserName(),
-                        update.getCallbackQuery().getFrom().getFirstName(), update.getCallbackQuery().getData());
+                logSelectedButton(update);
                 StateBot newState = stateToHandlerMap.get(stateBot).getNextState();
                 userService.updateUserState(telegramUserId, newState);
                 Message message = (Message) update.getCallbackQuery().getMessage();
@@ -86,6 +79,21 @@ public class UpdateHandler {
             }
         }
         return null;
+    }
+
+    private static void logSendText(Message message, StateBot state) {
+        log.info("User @{} : {} sent '{}'. State is {}", message.getFrom().getUserName(), message.getFrom().getFirstName(), message.getText(), state.name());
+    }
+
+    private static void logSelectedButton(Update update) {
+        log.info("User @{}:{} select button with id: {}", update.getCallbackQuery().getFrom().getUserName(),
+                update.getCallbackQuery().getFrom().getFirstName(), update.getCallbackQuery().getData());
+    }
+
+    private static void logPressedButton(Update update, StateBot state) {
+        log.info("User @{}:{} pressed button '{}'", update.getCallbackQuery().getFrom().getUserName(),
+                update.getCallbackQuery().getFrom().getFirstName(),
+                state.getButtonInThisState());
     }
 
     private boolean adminCommand(Message message) {

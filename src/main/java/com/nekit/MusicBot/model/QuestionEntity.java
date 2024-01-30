@@ -22,7 +22,7 @@ public class QuestionEntity extends AbstractEntity {
     @GenericGenerator(name = "increment", strategy = "increment")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
     private UserEntity author;
 
@@ -33,7 +33,7 @@ public class QuestionEntity extends AbstractEntity {
     @Builder.Default
     private Long selectNumber = 0L;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id")
     private TeacherEntity teacher;
 }
