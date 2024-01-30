@@ -5,6 +5,7 @@ import com.nekit.MusicBot.service.TeacherService;
 import com.nekit.MusicBot.state.StateBot;
 import com.nekit.MusicBot.util.TelegramUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
@@ -21,6 +22,7 @@ import static com.nekit.MusicBot.state.StateBot.USER_TEACHER_LIST;
 import static com.nekit.MusicBot.util.TelegramUtil.createButtonByState;
 import static com.nekit.MusicBot.util.TelegramUtil.getStringProfileByTeacherEntity;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class UserTeacherProfileHandler implements Handler {
@@ -39,6 +41,8 @@ public class UserTeacherProfileHandler implements Handler {
         }
         TeacherEntity entity = teacherService.findById(Long.valueOf(message.getText()));
         String profile = TelegramUtil.getStringProfileByTeacherEntity(entity);
+
+        logSelectedButton(message, entity);
 
         var keyboard = InlineKeyboardMarkup.builder()
                 .keyboard(List.of(
@@ -61,5 +65,10 @@ public class UserTeacherProfileHandler implements Handler {
                     .replyMarkup(keyboard)
                     .build();
         }
+    }
+
+    private static void logSelectedButton(Message message, TeacherEntity teacher) {
+        log.info("User @{}:{} select button: {}", message.getChat().getUserName(),
+                message.getChat().getFirstName(), teacher.getName());
     }
 }

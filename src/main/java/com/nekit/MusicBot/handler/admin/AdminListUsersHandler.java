@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
 import java.util.Comparator;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Component
@@ -28,10 +29,10 @@ public class AdminListUsersHandler implements Handler {
         var users = userService.getAllUsers();
         String text = users.stream()
                 .sorted(Comparator.comparingLong(UserEntity::getCountChangeState).reversed())
-                .map(user -> String.format("%s %s| @%s - %s",
+                .map(user -> String.format("%s %s| %s%s",
                         user.getCountChangeState(),
                         getNumberSpase(user.getCountChangeState()),
-                        user.getTelegramUserName(),
+                        Objects.isNull(user.getTelegramUserName()) ? "" : "@" + user.getTelegramUserName() + " ",
                         user.getTelegramFirstName()))
                 .collect(Collectors.joining("\n"));
         return getDefaultMessage(message, keyboard, text);

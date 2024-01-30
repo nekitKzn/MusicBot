@@ -60,7 +60,6 @@ public class UpdateHandler {
 
             } else { // значит выбран как либо вариант
                 StateBot stateBot = userService.findByTelegramId(telegramUserId).getState();
-                logSelectedButton(update);
                 StateBot newState = stateToHandlerMap.get(stateBot).getNextState();
                 userService.updateUserState(telegramUserId, newState);
                 Message message = (Message) update.getCallbackQuery().getMessage();
@@ -82,12 +81,7 @@ public class UpdateHandler {
     }
 
     private static void logSendText(Message message, StateBot state) {
-        log.info("User @{} : {} sent '{}'. State is {}", message.getFrom().getUserName(), message.getFrom().getFirstName(), message.getText(), state.name());
-    }
-
-    private static void logSelectedButton(Update update) {
-        log.info("User @{}:{} select button with id: {}", update.getCallbackQuery().getFrom().getUserName(),
-                update.getCallbackQuery().getFrom().getFirstName(), update.getCallbackQuery().getData());
+        log.info("User @{}:{} sent '{}'. State is {}", message.getFrom().getUserName(), message.getFrom().getFirstName(), message.getText(), state.name());
     }
 
     private static void logPressedButton(Update update, StateBot state) {
