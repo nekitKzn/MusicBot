@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: 05_add_count_all
+      author: lobanov_nikita
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: count_change_state_all
+                  type: numeric
+                  defaultValue: 0

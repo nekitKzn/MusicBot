@@ -28,7 +28,7 @@ public class CreateQuestionAllSuccessfullyHandler implements Handler {
         var user = userService.findByTelegramId(message.getFrom().getId());
         questionService.saveNewQuestionAll(user, message);
 
-        var keyboard = getKeyboardWithOneButton(START);
+        var keyboard = getKeyboardDefault(START);
         userService.updateUserState(message.getChatId(), START);
         return getDefaultMessage(message, keyboard, user.getTelegramFirstName());
     }

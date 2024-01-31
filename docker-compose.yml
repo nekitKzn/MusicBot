@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   musicbot-prod:
-    image: nekitvp/musicbot:1.4.0
+    image: nekitvp/musicbot:1.5.0
     restart: on-failure
     depends_on:
       - musicbot-db

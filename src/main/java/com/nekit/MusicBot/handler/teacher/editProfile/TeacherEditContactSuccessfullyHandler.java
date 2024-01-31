@@ -25,7 +25,7 @@ public class TeacherEditContactSuccessfullyHandler implements Handler {
 
     @Override
     public BotApiMethod<?> handle(Message message) {
-        var keyboard = getKeyboardWithOneButton(TEACHER_EDIT);
+        var keyboard = getKeyboardDefault(TEACHER_EDIT);
         teacherService.updateContacts(message);
         userService.updateUserState(message.getChatId(), StateBot.TEACHER_EDIT);
         return getDefaultMessage(message, keyboard);

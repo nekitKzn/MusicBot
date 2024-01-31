@@ -8,6 +8,7 @@ import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageTe
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static com.nekit.MusicBot.util.TelegramUtil.createButtonByState;
@@ -41,8 +42,9 @@ public interface Handler {
         }
     }
 
-    default InlineKeyboardMarkup getKeyboardWithOneButton(StateBot stateBot) {
-        return InlineKeyboardMarkup.builder()
-                .keyboard(List.of(List.of(createButtonByState(stateBot)))).build();
+    default InlineKeyboardMarkup getKeyboardDefault(StateBot... stateBot) {
+        return InlineKeyboardMarkup.builder().keyboard(Arrays.stream(stateBot)
+                .map(state -> List.of(createButtonByState(state)))
+                .toList()).build();
     }
 }

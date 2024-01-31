@@ -40,7 +40,7 @@ public class CheckNewAdminHandler implements Handler {
         UserEntity user = userService.findByUserName(message.getText());
         String text;
 
-        var keyboard = getKeyboardWithOneButton(ADMIN_MAIN);
+        var keyboard = getKeyboardDefault(ADMIN_MAIN);
 
         if (Objects.isNull(user)) {
             text = FAILED_NOT_FOUND_MESSAGE;

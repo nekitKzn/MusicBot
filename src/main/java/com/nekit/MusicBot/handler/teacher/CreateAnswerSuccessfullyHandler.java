@@ -29,7 +29,7 @@ public class CreateAnswerSuccessfullyHandler implements Handler {
     public BotApiMethod<?> handle(Message message) {
         var teacher = teacherService.findByTelegramId(message.getFrom().getId());
         questionService.saveAnswerSelectedQuestion(teacher, message.getText());
-        var keyboard = getKeyboardWithOneButton(TEACHER_MAIN);
+        var keyboard = getKeyboardDefault(TEACHER_MAIN);
         userService.updateUserState(message.getChatId(), TEACHER_MAIN);
         return getDefaultMessage(message, keyboard);
     }

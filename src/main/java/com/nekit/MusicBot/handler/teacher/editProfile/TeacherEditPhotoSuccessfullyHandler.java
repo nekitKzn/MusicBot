@@ -25,7 +25,7 @@ public class TeacherEditPhotoSuccessfullyHandler implements Handler {
     @Override
     public BotApiMethod<?> handle(Message message) {
         teacherService.updatePhoto(message);
-        var keyboard = getKeyboardWithOneButton(StateBot.TEACHER_EDIT);
+        var keyboard = getKeyboardDefault(StateBot.TEACHER_EDIT);
         userService.updateUserState(message.getChatId(), StateBot.TEACHER_EDIT);
         return SendMessage.builder()
                 .chatId(message.getChatId())

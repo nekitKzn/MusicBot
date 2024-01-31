@@ -1,6 +1,7 @@
 package com.nekit.MusicBot.util;
 
 import com.nekit.MusicBot.model.TeacherEntity;
+import com.nekit.MusicBot.state.FunctionBot;
 import com.nekit.MusicBot.state.StateBot;
 import lombok.experimental.UtilityClass;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
@@ -18,6 +19,13 @@ public class TelegramUtil {
         return InlineKeyboardButton.builder()
                 .text(state.getButtonInThisState())
                 .callbackData(state.name())
+                .build();
+    }
+
+    public static InlineKeyboardButton createButtonByFunction(FunctionBot functionBot) {
+        return InlineKeyboardButton.builder()
+                .text(functionBot.getButtonForThisFunction())
+                .callbackData(functionBot.name())
                 .build();
     }
 
@@ -42,6 +50,14 @@ public class TelegramUtil {
                 Objects.isNull(entity.getContacts()) ? EMPTY : entity.getContacts(),
                 Objects.isNull(entity.getChocolate()) ? EMPTY : entity.getChocolate(),
                 Objects.isNull(entity.getInfo()) ? EMPTY : entity.getInfo());
+    }
+
+    public static String getNumberSpase(Long number) {
+        if (number == 0) {
+            return " ".repeat(8);
+        } else {
+            return " ".repeat(10 - ((int) Math.log10(number) + 1) * 2);
+        }
     }
 
 

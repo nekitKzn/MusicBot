@@ -34,6 +34,7 @@ public class UserService {
                 .orElseThrow(() -> new MusicBotException(ACCOUNT_BY_ID_NOT_FOUND_MESSAGE, telegramUserId));
         userEntity.setState(state);
         userEntity.setCountChangeState(userEntity.getCountChangeState() + 1);
+        userEntity.setCountChangeStateAll(userEntity.getCountChangeStateAll() + 1);
         userRepository.save(userEntity);
     }
 
@@ -71,5 +72,11 @@ public class UserService {
     @Transactional
     public List<UserEntity> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    @Transactional
+    public void resetCount() {
+        List<UserEntity> users = userRepository.findAll().stream().peek(user -> user.setCountChangeState(0L)).toList();
+        userRepository.saveAll(users);
     }
 }

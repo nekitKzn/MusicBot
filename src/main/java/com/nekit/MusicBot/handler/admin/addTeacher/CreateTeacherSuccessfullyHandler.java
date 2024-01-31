@@ -23,7 +23,7 @@ public class CreateTeacherSuccessfullyHandler implements Handler {
     @Override
     public BotApiMethod<?> handle(Message message) {
 
-        var keyboard = getKeyboardWithOneButton(ADMIN_MAIN);
+        var keyboard = getKeyboardDefault(ADMIN_MAIN);
 
         return SendMessage.builder()
                 .chatId(message.getChatId())

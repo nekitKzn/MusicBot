@@ -27,7 +27,7 @@ public class CreateQuestionPersonallySuccessfullyHandler implements Handler {
     public BotApiMethod<?> handle(Message message) {
         var user = userService.findByTelegramId(message.getFrom().getId());
         questionService.addTextInLastQuestion(user, message.getText());
-        var keyboard = getKeyboardWithOneButton(START);
+        var keyboard = getKeyboardDefault(START);
         userService.updateUserState(message.getChatId(), START);
         return getDefaultMessage(message, keyboard);
     }

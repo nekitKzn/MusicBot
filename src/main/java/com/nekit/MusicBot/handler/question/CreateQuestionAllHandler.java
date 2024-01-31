@@ -23,7 +23,7 @@ public class CreateQuestionAllHandler implements Handler {
 
     @Override
     public BotApiMethod<?> handle(Message message) {
-        var keyboard = getKeyboardWithOneButton(START);
+        var keyboard = getKeyboardDefault(START);
         userService.updateUserState(message.getChatId(), StateBot.CREATE_QUESTION_ALL_SUCCESSFULLY);
         return getDefaultMessage(message, keyboard);
     }

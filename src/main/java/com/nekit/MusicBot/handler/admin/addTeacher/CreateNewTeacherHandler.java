@@ -24,7 +24,7 @@ public class CreateNewTeacherHandler implements Handler {
     @Override
     public BotApiMethod<?> handle(Message message) {
 
-        var keyboard = getKeyboardWithOneButton(ADMIN_MAIN);
+        var keyboard = getKeyboardDefault(ADMIN_MAIN);
 
         userService.updateUserState(message.getChatId(), StateBot.CHECK_NEW_TEACHER);
 

@@ -24,7 +24,7 @@ public class TeacherEditPhotoHandler implements Handler {
 
     @Override
     public BotApiMethod<?> handle(Message message) {
-        var keyboard = getKeyboardWithOneButton(StateBot.TEACHER_MAIN);
+        var keyboard = getKeyboardDefault(StateBot.TEACHER_MAIN);
         return SendMessage.builder()
                 .chatId(message.getChatId())
                 .text(getCurrentState().getMessage())

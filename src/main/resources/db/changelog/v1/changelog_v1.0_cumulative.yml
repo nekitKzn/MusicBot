@@ -5,3 +5,5 @@ databaseChangeLog:
       file: /db/changelog/v1/2024-01-30-re-type-selected.yml
   - include:
       file: /db/changelog/v1/2024-01-30-add-index-and-count-state.yml
+  - include:
+      file: /db/changelog/v1/2024-01-31-add-count-change-state-all.yml

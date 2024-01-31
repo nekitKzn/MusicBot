@@ -31,4 +31,7 @@ public class UserEntity extends AbstractEntity {
 
     @Builder.Default
     private Long countChangeState = 0L;
+
+    @Builder.Default
+    private Long countChangeStateAll = 0L;
 }

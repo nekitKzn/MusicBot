@@ -18,7 +18,7 @@ public class StorageSolfeggioHandler implements Handler {
 
     @Override
     public Object handle(Message message) {
-        var keyboard = getKeyboardWithOneButton(StateBot.START);
+        var keyboard = getKeyboardDefault(StateBot.START);
         return getDefaultMessage(message, keyboard, NOT_FOUND_FILES);
     }
 }

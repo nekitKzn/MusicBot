@@ -1,6 +1,7 @@
 package com.nekit.MusicBot.service;
 
 import com.nekit.MusicBot.handler.Handler;
+import com.nekit.MusicBot.state.FunctionBot;
 import com.nekit.MusicBot.state.StateBot;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class UpdateHandler {
 
     private final UserService userService;
     private final TeacherService teacherService;
+    private final FunctionService functionService;
 
     private final List<Handler> handlers;
     private final EnumMap<StateBot, Handler> stateToHandlerMap = new EnumMap<>(StateBot.class);
@@ -58,16 +60,24 @@ public class UpdateHandler {
                 userService.updateUserState(telegramUserId, state);
                 return stateToHandlerMap.get(state).handle((Message) update.getCallbackQuery().getMessage());
 
-            } else { // значит выбран как либо вариант
-                StateBot stateBot = userService.findByTelegramId(telegramUserId).getState();
-                StateBot newState = stateToHandlerMap.get(stateBot).getNextState();
-                if (Objects.isNull(newState)) {
-                    return null;
+            } else { // значит выбран как либо вариант или функция
+                FunctionBot function = FunctionBot.getFunctionBotByCallBackQuery(update.getCallbackQuery().getData());
+
+                if (Objects.nonNull(function)) { // нажата функция
+                    function.getFunction().accept(functionService);
+                    userService.updateUserState(telegramUserId, function.getStateBot());
+                    return stateToHandlerMap.get(function.getStateBot()).handle((Message) update.getCallbackQuery().getMessage());
+                } else {
+                    StateBot stateBot = userService.findByTelegramId(telegramUserId).getState();
+                    StateBot newState = stateToHandlerMap.get(stateBot).getNextState();
+                    if (Objects.isNull(newState)) {
+                        return null;
+                    }
+                    userService.updateUserState(telegramUserId, newState);
+                    Message message = (Message) update.getCallbackQuery().getMessage();
+                    message.setText(update.getCallbackQuery().getData());
+                    return stateToHandlerMap.get(newState).handle(message);
                 }
-                userService.updateUserState(telegramUserId, newState);
-                Message message = (Message) update.getCallbackQuery().getMessage();
-                message.setText(update.getCallbackQuery().getData());
-                return stateToHandlerMap.get(newState).handle(message);
             }
 
         } else if (isPhoto(update)) { // отправлена фотка

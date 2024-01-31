@@ -26,7 +26,7 @@ public class TeacherEditFioSuccessfullyHandler implements Handler {
 
     @Override
     public BotApiMethod<?> handle(Message message) {
-        InlineKeyboardMarkup keyboard = getKeyboardWithOneButton(TEACHER_EDIT);
+        InlineKeyboardMarkup keyboard = getKeyboardDefault(TEACHER_EDIT);
         teacherService.updateFio(message);
         userService.updateUserState(message.getChatId(), StateBot.TEACHER_EDIT);
         return getDefaultMessage(message, keyboard);
