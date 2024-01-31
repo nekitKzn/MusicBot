@@ -69,6 +69,6 @@ public class UserTeacherProfileHandler implements Handler {
 
     private static void logSelectedButton(Message message, TeacherEntity teacher) {
         log.info("User @{}:{} select button: {}", message.getChat().getUserName(),
-                message.getChat().getFirstName(), teacher.getName());
+                message.getChat().getFirstName(), teacher.getFio());
     }
 }

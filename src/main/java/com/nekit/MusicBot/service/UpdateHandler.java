@@ -61,6 +61,9 @@ public class UpdateHandler {
             } else { // значит выбран как либо вариант
                 StateBot stateBot = userService.findByTelegramId(telegramUserId).getState();
                 StateBot newState = stateToHandlerMap.get(stateBot).getNextState();
+                if (Objects.isNull(newState)) {
+                    return null;
+                }
                 userService.updateUserState(telegramUserId, newState);
                 Message message = (Message) update.getCallbackQuery().getMessage();
                 message.setText(update.getCallbackQuery().getData());
