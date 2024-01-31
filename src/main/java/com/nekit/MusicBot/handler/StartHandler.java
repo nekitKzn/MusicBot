@@ -30,6 +30,7 @@ public class StartHandler implements Handler {
         var replyKeyboard = InlineKeyboardMarkup.builder()
                 .keyboard(List.of(
                         List.of(createButtonByState(CREATE_QUESTION)),
+                        List.of(createButtonByState(STORAGE)),
                         List.of(
                                 createButtonByState(ABOUT_BOT),
                                 createButtonByState(USER_TEACHER_LIST)
