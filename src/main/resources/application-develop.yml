@@ -1,6 +1,6 @@
-bot: # t.me/prizvan_sluzhit_develop_bot
-  name: Призван служить DEVELOP
-  token: 6918318319:AAGXiCWNU0t79EW5KqCTcj4mptYh7Z8bE9I
+bot: # t.me/kinnor_develop_bot
+  name: Киннор DEVELOP
+  token: 6987684644:AAGHaMYm9994uC7wpADVG74w0XlSEQrInKQ
   groupChatId: -1002087539171
   replyMessageId: 2
 

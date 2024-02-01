@@ -1,5 +1,5 @@
-bot: # t.me/prizvan_sluzhit_bot
-  name: Призван служить
-  token: 6588538841:AAERgV7WeP7E1LWlSKQJD-l0rpMqZv7eP7Y
+bot: # t.me/kinnor_bot
+  name: Киннор
+  token: 6634074478:AAEo0rrdWwMdLDSUfM6ye1FsCvW_qWexm_o
   groupChatId: -1002047742156
   replyMessageId: 222
