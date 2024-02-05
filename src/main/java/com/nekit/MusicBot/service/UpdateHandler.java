@@ -1,8 +1,8 @@
 package com.nekit.MusicBot.service;
 
+import com.nekit.MusicBot.enumBot.FunctionBot;
+import com.nekit.MusicBot.enumBot.StateBot;
 import com.nekit.MusicBot.handler.Handler;
-import com.nekit.MusicBot.state.FunctionBot;
-import com.nekit.MusicBot.state.StateBot;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -67,21 +67,20 @@ public class UpdateHandler {
                     function.getFunction().accept(functionService);
                     userService.updateUserState(telegramUserId, function.getStateBot());
                     return stateToHandlerMap.get(function.getStateBot()).handle((Message) update.getCallbackQuery().getMessage());
-                } else {
+                } else { // выбран id
                     StateBot stateBot = userService.findByTelegramId(telegramUserId).getState();
                     StateBot newState = stateToHandlerMap.get(stateBot).getNextState();
-                    if (Objects.isNull(newState)) {
-                        return null;
+                    if (Objects.nonNull(newState)) {
+                        userService.updateUserState(telegramUserId, newState);
+                        Message message = (Message) update.getCallbackQuery().getMessage();
+                        message.setText(update.getCallbackQuery().getData());
+                        return stateToHandlerMap.get(newState).handle(message);
                     }
-                    userService.updateUserState(telegramUserId, newState);
-                    Message message = (Message) update.getCallbackQuery().getMessage();
-                    message.setText(update.getCallbackQuery().getData());
-                    return stateToHandlerMap.get(newState).handle(message);
                 }
             }
 
-        } else if (isPhoto(update)) { // отправлена фотка
-            log.info("Пришло фото");
+        } else if (isFile(update)) { // отправлен файл
+            log.info("Пришел файл от " + update.getMessage().getFrom().getFirstName());
             Long telegramUserId = update.getMessage().getFrom().getId();
             StateBot stateBot = userService.findByTelegramId(telegramUserId).getState();
             StateBot newState = stateToHandlerMap.get(stateBot).getNextState();
@@ -117,7 +116,11 @@ public class UpdateHandler {
         return !update.hasCallbackQuery() && update.hasMessage() && update.getMessage().hasText();
     }
 
-    private boolean isPhoto(Update update) {
-        return update.hasMessage() && update.getMessage().hasPhoto();
+    private boolean isFile(Update update) {
+        return update.hasMessage() &&
+                (update.getMessage().hasPhoto() ||
+                        update.getMessage().hasDocument() ||
+                        update.getMessage().hasVideo() ||
+                        update.getMessage().hasAudio());
     }
 }

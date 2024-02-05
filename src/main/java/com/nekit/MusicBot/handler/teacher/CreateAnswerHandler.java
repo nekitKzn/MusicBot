@@ -1,10 +1,10 @@
 package com.nekit.MusicBot.handler.teacher;
 
+import com.nekit.MusicBot.enumBot.StateBot;
 import com.nekit.MusicBot.handler.Handler;
 import com.nekit.MusicBot.model.QuestionEntity;
 import com.nekit.MusicBot.service.QuestionService;
 import com.nekit.MusicBot.service.UserService;
-import com.nekit.MusicBot.state.StateBot;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

@@ -1,9 +1,9 @@
 package com.nekit.MusicBot.handler.teacher;
 
+import com.nekit.MusicBot.enumBot.StateBot;
 import com.nekit.MusicBot.handler.Handler;
 import com.nekit.MusicBot.model.TeacherEntity;
 import com.nekit.MusicBot.service.TeacherService;
-import com.nekit.MusicBot.state.StateBot;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
@@ -14,7 +14,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import java.util.List;
 import java.util.Objects;
 
-import static com.nekit.MusicBot.state.StateBot.*;
+import static com.nekit.MusicBot.enumBot.StateBot.*;
 import static com.nekit.MusicBot.util.TelegramUtil.createButtonByState;
 import static com.nekit.MusicBot.util.TelegramUtil.getStringProfileByTeacherEntity;
 

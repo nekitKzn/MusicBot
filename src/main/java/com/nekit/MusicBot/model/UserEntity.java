@@ -1,6 +1,6 @@
 package com.nekit.MusicBot.model;
 
-import com.nekit.MusicBot.state.StateBot;
+import com.nekit.MusicBot.enumBot.StateBot;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

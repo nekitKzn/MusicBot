@@ -6,8 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
+import org.telegram.telegrambots.meta.api.methods.send.*;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -52,25 +51,33 @@ public class TelegramBot extends TelegramLongPollingBot {
         }
 
         try {
-            if (message instanceof SendMessage sendMessage) {
+            if (message instanceof EditMessageText editMessageText) {
+                execute(editMessageText);
+            } else if (message instanceof SendMessage sendMessage) {
                 execute(sendMessage);
-            } else if (message instanceof SendPhoto) {
-                execute((SendPhoto) message);
-            } else {
-                execute((EditMessageText) message);
+            } else if (message instanceof SendPhoto sendPhoto) {
+                execute(sendPhoto);
+            } else if (message instanceof SendDocument sendDocument) {
+                execute(sendDocument);
+            } else if (message instanceof SendAudio sendAudio) {
+                execute(sendAudio);
+            } else if (message instanceof SendVideo sendVideo) {
+                execute(sendVideo);
             }
-
         } catch (TelegramApiException e) {
             log.info(ERROR_WITH_SENDING_MESSAGE, e);
         }
     }
 
     private boolean messageFromGroup(Update update) {
+        // разрешенные действия будем пропускать
         boolean result = true;
         if (Objects.nonNull(update.getMessage()) && update.getMessage().isUserMessage()) {
+            // любое сообщение в личке (текст, фото, документ)
             result = false;
         }
         if (Objects.nonNull(update.getCallbackQuery()) && update.getCallbackQuery().getMessage().isUserMessage()) {
+            // любая кнопка в личке
             result = false;
         }
         return result;

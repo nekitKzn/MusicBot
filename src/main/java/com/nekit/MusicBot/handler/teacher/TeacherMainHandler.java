@@ -1,7 +1,7 @@
 package com.nekit.MusicBot.handler.teacher;
 
+import com.nekit.MusicBot.enumBot.StateBot;
 import com.nekit.MusicBot.handler.Handler;
-import com.nekit.MusicBot.state.StateBot;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
@@ -12,7 +12,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import java.util.List;
 import java.util.Objects;
 
-import static com.nekit.MusicBot.state.StateBot.*;
+import static com.nekit.MusicBot.enumBot.StateBot.*;
 import static com.nekit.MusicBot.util.TelegramUtil.createButtonByState;
 
 @Component
@@ -30,6 +30,7 @@ public class TeacherMainHandler implements Handler {
                 .keyboard(
                         List.of(
                                 List.of(createButtonByState(QUESTION_LIST)),
+                                List.of(createButtonByState(FILE_LOAD)),
                                 List.of(createButtonByState(TEACHER_EDIT)),
                                 List.of(createButtonByState(START)))
                 )

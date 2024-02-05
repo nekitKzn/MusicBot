@@ -1,4 +1,4 @@
-package com.nekit.MusicBot.state;
+package com.nekit.MusicBot.enumBot;
 
 import com.nekit.MusicBot.service.FunctionService;
 import lombok.Getter;
@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.Arrays;
 import java.util.function.Consumer;
 
-import static com.nekit.MusicBot.state.StateBot.ADMIN_LIST_USERS_UPDATE_COUNT;
+import static com.nekit.MusicBot.enumBot.StateBot.ADMIN_LIST_USERS_UPDATE_COUNT;
 
 @Getter
 @RequiredArgsConstructor

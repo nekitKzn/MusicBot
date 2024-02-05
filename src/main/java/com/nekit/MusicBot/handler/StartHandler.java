@@ -1,6 +1,6 @@
 package com.nekit.MusicBot.handler;
 
-import com.nekit.MusicBot.state.StateBot;
+import com.nekit.MusicBot.enumBot.StateBot;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
@@ -11,7 +11,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMa
 import java.util.List;
 import java.util.Objects;
 
-import static com.nekit.MusicBot.state.StateBot.*;
+import static com.nekit.MusicBot.enumBot.StateBot.*;
 import static com.nekit.MusicBot.util.TelegramUtil.createButtonByState;
 
 

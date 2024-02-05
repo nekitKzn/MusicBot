@@ -1,9 +1,9 @@
 package com.nekit.MusicBot.service;
 
+import com.nekit.MusicBot.enumBot.StateBot;
 import com.nekit.MusicBot.exception.MusicBotException;
 import com.nekit.MusicBot.model.UserEntity;
 import com.nekit.MusicBot.repository.UserRepository;
-import com.nekit.MusicBot.state.StateBot;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

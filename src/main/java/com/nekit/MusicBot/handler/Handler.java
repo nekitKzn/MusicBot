@@ -1,7 +1,7 @@
 
 package com.nekit.MusicBot.handler;
 
-import com.nekit.MusicBot.state.StateBot;
+import com.nekit.MusicBot.enumBot.StateBot;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.updatingmessages.EditMessageText;
@@ -40,6 +40,15 @@ public interface Handler {
                     .replyMarkup(keyboard)
                     .build();
         }
+    }
+
+    default SendMessage getSimpleMessage(Message message, InlineKeyboardMarkup keyboardMarkup, Object... args) {
+        String text = isEmpty(args) ? getCurrentState().getMessage() : String.format(getCurrentState().getMessage(), args);
+        return SendMessage.builder()
+                .chatId(message.getChatId())
+                .text(text)
+                .replyMarkup(keyboardMarkup)
+                .build();
     }
 
     default InlineKeyboardMarkup getKeyboardDefault(StateBot... stateBot) {

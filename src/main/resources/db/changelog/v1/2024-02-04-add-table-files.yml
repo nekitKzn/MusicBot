@@ -1,0 +1,49 @@
+databaseChangeLog:
+  - changeSet:
+      id: 06_add_table_files
+      author: lobanov_nikita
+      changes:
+        - createTable:
+            tableName: files
+            columns:
+              - column:
+                  name: id
+                  type: numeric
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValue: now()
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValue: now()
+                  constraints:
+                    nullable: false
+              - column:
+                  name: file_name
+                  type: varchar
+              - column:
+                  name: user_id
+                  type: numeric
+                  constraints:
+                    nullable: false
+              - column:
+                  name: file_id
+                  type: varchar
+              - column:
+                  name: file_type
+                  type: varchar(20)
+              - column:
+                  name: file_lesson
+                  type: varchar(20)
+
+        - createIndex:
+            tableName: files
+            columns:
+              - column:
+                  name: file_lesson
+            indexName: files_file_lesson_idx

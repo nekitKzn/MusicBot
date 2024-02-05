@@ -1,14 +1,14 @@
 package com.nekit.MusicBot.handler.admin.addAdmin;
 
+import com.nekit.MusicBot.enumBot.StateBot;
 import com.nekit.MusicBot.handler.Handler;
 import com.nekit.MusicBot.service.UserService;
-import com.nekit.MusicBot.state.StateBot;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.BotApiMethod;
 import org.telegram.telegrambots.meta.api.objects.Message;
 
-import static com.nekit.MusicBot.state.StateBot.ADMIN_MAIN;
+import static com.nekit.MusicBot.enumBot.StateBot.ADMIN_MAIN;
 
 @Component
 @RequiredArgsConstructor
