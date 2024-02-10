@@ -29,13 +29,16 @@ public class UserService {
     }
 
     @Transactional
-    public void updateUserState(Long telegramUserId, StateBot state) {
+    public StateBot updateUserState(Long telegramUserId, StateBot state) {
         UserEntity userEntity = userRepository.findById(telegramUserId)
                 .orElseThrow(() -> new MusicBotException(ACCOUNT_BY_ID_NOT_FOUND_MESSAGE, telegramUserId));
-        userEntity.setState(state);
+        if (!userEntity.getBlock()) {
+            userEntity.setState(state);
+        }
         userEntity.setCountChangeState(userEntity.getCountChangeState() + 1);
         userEntity.setCountChangeStateAll(userEntity.getCountChangeStateAll() + 1);
         userRepository.save(userEntity);
+        return userEntity.getState();
     }
 
     @Transactional

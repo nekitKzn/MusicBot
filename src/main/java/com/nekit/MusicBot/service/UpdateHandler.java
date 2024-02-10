@@ -57,8 +57,8 @@ public class UpdateHandler {
 
             if (Objects.nonNull(state)) { // значит нажата кнопка с состоянием
                 logPressedButton(update, state);
-                userService.updateUserState(telegramUserId, state);
-                return stateToHandlerMap.get(state).handle((Message) update.getCallbackQuery().getMessage());
+                StateBot actualState = userService.updateUserState(telegramUserId, state);
+                return stateToHandlerMap.get(actualState).handle((Message) update.getCallbackQuery().getMessage());
 
             } else { // значит выбран как либо вариант или функция
                 FunctionBot function = FunctionBot.getFunctionBotByCallBackQuery(update.getCallbackQuery().getData());

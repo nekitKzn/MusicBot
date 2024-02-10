@@ -1,0 +1,12 @@
+databaseChangeLog:
+  - changeSet:
+      id: 07_add_block
+      author: lobanov_nikita
+      changes:
+        - addColumn:
+            tableName: users
+            columns:
+              - column:
+                  name: block
+                  type: boolean
+                  defaultValueBoolean: false

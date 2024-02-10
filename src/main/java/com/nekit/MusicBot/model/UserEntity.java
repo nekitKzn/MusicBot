@@ -30,6 +30,9 @@ public class UserEntity extends AbstractEntity {
     private Boolean admin = false;
 
     @Builder.Default
+    private Boolean block = false;
+
+    @Builder.Default
     private Long countChangeState = 0L;
 
     @Builder.Default

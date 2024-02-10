@@ -39,14 +39,18 @@ public class StartHandler implements Handler {
                 .build();
 
 
-        if (Objects.isNull(message.getPhoto())) {
-            return getDefaultMessage(message, replyKeyboard);
-        } else {
+        if (Objects.nonNull(message.getPhoto())) {
             return SendMessage.builder()
                     .chatId(message.getChatId())
                     .text(getCurrentState().getMessage())
                     .replyMarkup(replyKeyboard)
                     .build();
+        } else {
+            if (replyKeyboard.equals(message.getReplyMarkup())) {
+                return null;
+            } else {
+                return getDefaultMessage(message, replyKeyboard);
+            }
         }
     }
 }
