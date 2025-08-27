@@ -2,12 +2,12 @@ version: '3.8'
 
 services:
   musicbot-prod:
-    image: nekitvp/musicbot:2.0.0
+    image: nekitvp/musicbot:2.1.0
     restart: on-failure
     depends_on:
       - musicbot-db
     expose:
-      - "8080"
+      - "8888"
     networks:
       - musicbot-prod
     environment:
@@ -15,7 +15,7 @@ services:
       DB_PORT: 5432
       DB_NAME: musicBot
       DB_USERNAME: postgres
-      DB_PASSWORD: tblJYutvdNe6T16UwEbZHCJ01NFaFKhy
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
       SPRING_PROFILES_ACTIVE: prod
 
   musicbot-db:
@@ -32,7 +32,7 @@ services:
       - musicbot-prod
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: tblJYutvdNe6T16UwEbZHCJ01NFaFKhy
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: musicBot
 
 networks:

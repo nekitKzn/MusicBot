@@ -1,6 +1,6 @@
 bot: # t.me/kinnor_develop_bot
   name: Киннор DEVELOP
-  token: 6987684644:AAGHaMYm9994uC7wpADVG74w0XlSEQrInKQ
+  token: ${TELEGRAM_TOKEN_DEVELOP}
   groupChatId: -1002087539171
   replyMessageId: 2
 

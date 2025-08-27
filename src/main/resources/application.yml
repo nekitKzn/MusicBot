@@ -1,6 +1,6 @@
 bot: # t.me/prizvan_sluzhit_develop_bot
   name: Призван служить DEVELOP
-  token: 6918318319:AAGXiCWNU0t79EW5KqCTcj4mptYh7Z8bE9I
+  token: ${TELEGRAM_TOKEN}
   groupChatId: -1002093961472
 spring:
   datasource:
